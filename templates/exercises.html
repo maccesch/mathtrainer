@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head lang="de">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Maccesch's Übungsaufgaben</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Maccesch's Übungsaufgaben <small>für {{ date }}</small></h1>
+            </div>
+        </div>
+        <div class="row">
+            {% for eq, solutions in equations %}
+                <div class="col-md-6">
+                    <h3>Aufgabe {{ loop.index }}</h3>
+                    <p>
+                        Bestimme die Lösungsmenge von \(x\).
+                    </p>
+                    <p>
+                        $${{ eq }}$$
+                    </p>
+                    <p>
+                        <a class="btn btn-default" data-toggle="collapse" href="#solution{{ loop.index }}">Lösung anzeigen</a>
+                    </p>
+
+                    <div id="solution{{ loop.index }}" class="collapse">
+                        <div class="well">
+                            $$
+                            \begin{eqnarray}
+                                {% for solution in solutions %}
+                                    x{% if loop.length > 1 %}_{{ loop.index }}{% endif %} &=& {{ solution }} \\
+                                {% endfor %}
+                            \end{eqnarray}
+                            $$
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
