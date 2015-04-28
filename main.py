@@ -26,6 +26,17 @@ def desolve_equation(lhs, rhs, operation_count):
     return lhs, rhs
 
 
+def generate_equation():
+    solution = S(randint(-20, 20)) / S(randint(1, 10))
+
+    lhs = solution
+    rhs = symbols('x')
+
+    lhs, rhs = desolve_equation(lhs, rhs, 7)
+
+    return latex(Eq(rhs, lhs)), [latex(solution)]
+
+
 def generate_quadratic_equation():
     p = S(randint(-10, 10))
     p2 = p / 2
@@ -53,7 +64,14 @@ def generate_quadratic_equation():
 
 
 def generate_exponential_equation():
-    solution = S(randint(-20, 20)) + sqrt(S(randint(0, 10))) * (randint(0, 1) * 2 - 1)
+
+    solution_op = randint(0, 2)
+    if solution_op == 0:
+        solution = S(randint(-20, 20)) + sqrt(S(randint(0, 10))) * (randint(0, 1) * 2 - 1)
+    elif solution_op == 1:
+        solution = log(S(randint(1, 20)))
+    else:
+        solution = exp(S(randint(-10, 10)))
 
     x = symbols('x')
 
@@ -62,13 +80,27 @@ def generate_exponential_equation():
 
     lhs, rhs = desolve_equation(lhs, rhs, 2)
 
-    op = randint(0, 1)
+    use_base = 0
+
+    if solution_op == 0:
+        use_base = randint(0, 1)
+        op = randint(0, 1)
+    elif solution_op == 1:
+        op = 0
+    else:
+        op = 1
+
     if op and rhs > 0:
         lhs = log(lhs)
         rhs = log(rhs)
     else:
-        lhs = exp(lhs)
-        rhs = exp(rhs)
+        if use_base:
+            base = S(randint(2, 10))
+            lhs = base ** lhs
+            rhs = base ** rhs
+        else:
+            lhs = exp(lhs)
+            rhs = exp(rhs)
 
     lhs, rhs = desolve_equation(lhs, rhs, 3)
 
@@ -81,7 +113,8 @@ def get_equations_for_date(thedate):
 
     equations = []
     equations.append(generate_quadratic_equation())
-    equations.append(generate_exponential_equation())
+    #equations.append(generate_exponential_equation())
+    equations.append(generate_equation())
 
     return equations
 
