@@ -32,12 +32,17 @@ def desolve_equation(lhs, rhs, operation_count, eq_symbols=range(1, 11)):
 def generate_hard_equation():
     x, a, b, c = symbols('x a b c')
 
-    eq_symbols = [a, b, c] + range(-20, 0) + range(1, 21)
+    temp_symbols = [a, b, c] + range(1, 21)
+
+    eq_symbols = []
+    for s in temp_symbols:
+        eq_symbols.append(s)
+        eq_symbols.append(sqrt(s))
+        eq_symbols.append(-s)
+        eq_symbols.append(-sqrt(s))
 
     solution = S(choice(eq_symbols))
 
-    if (solution in (a, b, c) or solution > 0) and randint(0, 1):
-        solution = sqrt(solution)
     if randint(0, 1):
         solution /= choice(eq_symbols)
 
@@ -45,7 +50,7 @@ def generate_hard_equation():
     lhs = solution
     rhs = x
 
-    lhs, rhs = desolve_equation(lhs, rhs, 10, eq_symbols)
+    lhs, rhs = desolve_equation(lhs, rhs, 8, eq_symbols)
 
     return latex(Eq(rhs, lhs)), [latex(solution)]
 
@@ -138,15 +143,15 @@ def get_equations_for_date(thedate):
     equations = []
 
     eq, sol = generate_quadratic_equation()
-    equations.append((u'Aufgabe 1', ur'Bestimme die Lösungsmenge von \(x\).', eq, sol))
+    equations.append((6, u'Aufgabe 1', ur'Bestimme die Lösungsmenge von \(x\).', eq, sol))
 
     # equations.append(generate_exponential_equation())
 
     eq, sol = generate_equation()
-    equations.append((u'Aufgabe 2', ur'Löse nach \(x\) auf.', eq, sol))
+    equations.append((6, u'Aufgabe 2', ur'Löse nach \(x\) auf.', eq, sol))
 
     eq, sol = generate_hard_equation()
-    equations.append((u'Bonushammeraufgabe', ur'Löse nach \(x\) auf. Eventuell vorkommende Symbole \(a\), \(b\) und \(c\) sind unbekannte Konstanten.', eq, sol))
+    equations.append((12, u'Bonushammeraufgabe', ur'Löse nach \(x\) auf. Eventuell vorkommende Symbole \(a\), \(b\) und \(c\) sind unbekannte Konstanten.', eq, sol))
 
     return equations
 

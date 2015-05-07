@@ -17,8 +17,8 @@
             </div>
         </div>
         <div class="row">
-            {% for title, text, eq, solutions in equations %}
-                <div class="col-md-6">
+            {% for cols, title, text, eq, solutions in equations %}
+                <div class="col-md-{{ cols }}">
                     <h3>{{ title }}</h3>
                     <p>
                         {{ text }}
