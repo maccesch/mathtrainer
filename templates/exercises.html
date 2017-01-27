@@ -16,6 +16,7 @@
                 <h1>Maccesch's Übungsaufgaben <small>für {{ date }}</small></h1>
             </div>
         </div>
+
         <div class="row">
             {% for cols, title, text, eq, solutions in equations %}
                 <div class="col-md-{{ cols }}">
@@ -44,6 +45,8 @@
                 </div>
             {% endfor %}
         </div>
+
+        {% include "rules.html" %}
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

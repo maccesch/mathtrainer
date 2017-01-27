@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from datetime import date
 from sympy import S, floor, sqrt, factor, Add, Eq, symbols, latex, simplify, exp, log, root
 import locale
-from numpy.random import seed, random_integers as randint, choice
+from numpy.random import seed, random_integers, choice
 from sympy.core.mul import Mul
 from sympy.core.numbers import Rational
 
@@ -12,9 +12,13 @@ locale.setlocale(locale.LC_ALL, 'de_DE')
 app = Flask(__name__)
 
 
+def randint(mi, ma):
+    return int(random_integers(mi, ma))
+
+
 def desolve_equation(lhs, rhs, operation_count, eq_symbols=range(1, 11)):
     for i in range(operation_count):
-        number = S(choice(eq_symbols) * (randint(0, 1) * 2 - 1))
+        number = S(choice(eq_symbols) * S(randint(0, 1) * 2 - 1))
         op = randint(0, 10)
         if op <= 6:
             rhs = Add(rhs, number, evaluate=(randint(0, 1) == 1))
@@ -32,7 +36,7 @@ def desolve_equation(lhs, rhs, operation_count, eq_symbols=range(1, 11)):
 def generate_hard_equation():
     x, a, b, c = symbols('x a b c')
 
-    temp_symbols = [a, b, c] + range(1, 21)
+    temp_symbols = [a, b, c] + list(range(1, 21))
 
     eq_symbols = []
     for s in temp_symbols:
@@ -143,15 +147,15 @@ def get_equations_for_date(thedate):
     equations = []
 
     eq, sol = generate_quadratic_equation()
-    equations.append((6, u'Aufgabe 1', ur'Bestimme die Lösungsmenge von \(x\).', eq, sol))
+    equations.append((6, 'Aufgabe 1', r'Bestimme die Lösungsmenge von \(x\).', eq, sol))
 
     # equations.append(generate_exponential_equation())
 
     eq, sol = generate_equation()
-    equations.append((6, u'Aufgabe 2', ur'Löse nach \(x\) auf.', eq, sol))
+    equations.append((6, 'Aufgabe 2', r'Löse nach \(x\) auf.', eq, sol))
 
     eq, sol = generate_hard_equation()
-    equations.append((12, u'Bonushammeraufgabe', ur'Löse nach \(x\) auf. Eventuell vorkommende Symbole \(a\), \(b\) und \(c\) sind unbekannte Konstanten.', eq, sol))
+    equations.append((12, 'Bonushammeraufgabe', r'Löse nach \(x\) auf. Eventuell vorkommende Symbole \(a\), \(b\) und \(c\) sind unbekannte Konstanten.', eq, sol))
 
     return equations
 
