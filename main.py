@@ -147,15 +147,15 @@ def get_equations_for_date(thedate):
     equations = []
 
     eq, sol = generate_quadratic_equation()
-    equations.append((6, 'Aufgabe 1', r'Bestimme die Lösungsmenge von \(x\).', eq, sol))
+    equations.append((6, u'Aufgabe 1', u'Bestimme die Lösungsmenge von \\(x\\).', eq, sol))
 
     # equations.append(generate_exponential_equation())
 
     eq, sol = generate_equation()
-    equations.append((6, 'Aufgabe 2', r'Löse nach \(x\) auf.', eq, sol))
+    equations.append((6, u'Aufgabe 2', u'Löse nach \\(x\\) auf.', eq, sol))
 
     eq, sol = generate_hard_equation()
-    equations.append((12, 'Bonushammeraufgabe', r'Löse nach \(x\) auf. Eventuell vorkommende Symbole \(a\), \(b\) und \(c\) sind unbekannte Konstanten.', eq, sol))
+    equations.append((12, u'Bonushammeraufgabe', u'Löse nach \\(x\\) auf. Eventuell vorkommende Symbole \\(a\\), \\(b\\) und \\(c\\) sind unbekannte Konstanten.', eq, sol))
 
     return equations
 
